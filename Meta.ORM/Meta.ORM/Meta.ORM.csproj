@@ -1,0 +1,22 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Newtonsoft.Json" Version="11.0.1" />
+    <PackageReference Include="Npgsql" Version="3.2.7" />
+    <PackageReference Include="Serilog" Version="2.6.0" />
+    <PackageReference Include="StructureMap" Version="4.6.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Sql\Dml\Insert\" />
+    <Folder Include="Sql\Dml\Delete\" />
+    <Folder Include="Sql\Dml\Condition\" />
+    <Folder Include="Sql\Dml\Update\" />
+    <Folder Include="Sql\Scheme\" />
+  </ItemGroup>
+
+</Project>
