@@ -24,14 +24,16 @@ namespace Meta.ORM.Entities
             
         }
 
-        public IEntitiesRepository GetRepository(Type entityType)
+        public IEntitiesRepository GetRepository(Type type)
         {
-            return new EntitiesRepository(_model, this, _sqlBuilder, _dbProvider, entityType);
+            Type dqType = typeof(GenericEntitiesRepository<>).MakeGenericType(type);
+            return (IEntitiesRepository)Activator.CreateInstance(dqType, _model, this, _sqlBuilder, _dbProvider);
         }
 
         public IEntitiesRepository GetRepository(IEntityType entityType)
         {
-            return new EntitiesRepository(_model, this, _sqlBuilder, _dbProvider, entityType.SystemType);
+            Type dqType = typeof(GenericEntitiesRepository<>).MakeGenericType(entityType.SystemType);
+            return (IEntitiesRepository)Activator.CreateInstance(dqType, _model, this, _sqlBuilder, _dbProvider);
         }
 
         public IGenericEntitiesRepository<T> GetRepository<T>() where T : class, IEntity, new()

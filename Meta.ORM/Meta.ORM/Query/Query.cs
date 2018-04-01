@@ -12,10 +12,10 @@ using Meta.ORM.Sql;
 namespace Meta.ORM.Query
 {
     /// <summary>
-    /// Represents a query object to RDMS, which result should be represented as <see cref="IEnumerable{T}"/>.
+    /// Represents a query object to RDMS, which result should be translated to <see cref="IEnumerable{T}"/>.
     /// </summary>
     /// <typeparam name="T">Type of domain entities.</typeparam>
-    public partial class Query<T> 
+    public partial class Query<T> : IQuery<T>, IOrderedQuery<T>
     {
         private readonly IModel _model;
         private readonly IUnitOfWork _unitOfWork;
@@ -30,15 +30,10 @@ namespace Meta.ORM.Query
             _dbProvider = dbProvider;
         }
 
-        /// <summary>
-        /// This method allows to include in query property path, which is expressed as a <param name="propertyExpression"></param>.
-        /// Supports only syntax as Property1. ... PropertyN, or calls on <see cref="IEntity.GetPropertyValue(string)"/>.
-        /// </summary>
-        /// <typeparam name="TProperty">Type of property path.</typeparam>
-        /// <param name="propertyExpression">Expression for property path.</param>
-        /// <returns>Query object.</returns>
-        public Query<T> Include<TProperty>(Expression<Func<T, TProperty>> propertyExpression)
+        /// <inheritdoc />
+        public IQuery<T> Include<TProperty>(Expression<Func<T, TProperty>> propertyExpression)
         {
+            // Simply sequence of properties
             if (propertyExpression.Body is MemberExpression memberExpression)
             {
                 var propertyPath = GetPropertyPathFromExpression(memberExpression);
@@ -46,6 +41,7 @@ namespace Meta.ORM.Query
                 return this;
             }
 
+            // call of GetPropertyValue method of IEntity
             if (propertyExpression.Body is MethodCallExpression methodCallExpression &&
                 methodCallExpression.Object is ParameterExpression &&
                 methodCallExpression.Method.Name == "GetPropertyValue" && methodCallExpression.Arguments.Count == 1)
@@ -102,34 +98,8 @@ namespace Meta.ORM.Query
             throw new ArgumentException("Invalid Property");
         }
 
-        private IEnumerable<MemberInfo> GetPropertyPathFromExpression(MemberExpression memberExpression)
-        {
-            var member = memberExpression.Member;
-            if (member.MemberType != MemberTypes.Property)
-                throw new ArgumentException("Only Properties Allowed in Include statements");
-
-            if (memberExpression.Expression is MemberExpression innerMemberExpression)
-            {
-                return GetPropertyPathFromExpression(innerMemberExpression).Append(member);
-            }
-            
-            if (memberExpression.Expression != null && !( memberExpression.Expression is ParameterExpression))
-            {
-                throw new ArgumentException("Only Properties Allowed in Include statements");
-            }
-
-            return new List<MemberInfo> { member };
-        }
-
-        /// <summary>
-        /// This method allows to include in query content  of <see cref="IEnumerable{TProperty}"/> property as sub-query.
-        /// Supports only syntax as Property, or calls on <see cref="IEntity.GetPropertyValue(string)"/>.
-        /// </summary>
-        /// <typeparam name="TProperty">Type of property.</typeparam>
-        /// <param name="propertyExpression">Expression for property path.</param>
-        /// <param name="listConfig">Configuration for sub-query.</param>
-        /// <returns>Query object.</returns>
-        public Query<T> IncludeList<TProperty>(
+        /// <inheritdoc />
+        public IQuery<T> IncludeList<TProperty>(
             Expression<Func<T, IEnumerable<TProperty>>> propertyExpression,
             Action<Query<TProperty>> listConfig = null)
         {
@@ -193,14 +163,8 @@ namespace Meta.ORM.Query
             throw new ArgumentException("Invalid Property");
         }
 
-        /// <summary>
-        /// Include calculated column/property in query.
-        /// </summary>
-        /// <typeparam name="TProperty">Type of calculated property.</typeparam>
-        /// <param name="calculationExpression">Function for calculated property.</param>
-        /// <param name="name">Unique name for calculated column.</param>
-        /// <returns>Query object.</returns>
-        public Query<T> IncludeCalculation<TProperty>(Expression<Func<T, TProperty>> calculationExpression, string name)
+        /// <inheritdoc />
+        public IQuery<T> IncludeCalculation<TProperty>(Expression<Func<T, TProperty>> calculationExpression, string name)
         {
             var calcProperty =
                 new CalculatedProperty<TProperty>
@@ -213,13 +177,8 @@ namespace Meta.ORM.Query
             return this;
         }
 
-        /// <summary>
-        /// Include calculated column/property in query.
-        /// </summary>
-        /// <param name="calculationExpression">Expression for calculation.</param>
-        /// <param name="name">Unique name for calculated column.</param>
-        /// <returns>Query object.</returns>
-        public Query<T> IncludeCalculation<TProperty>(MetaExpression<TProperty> calculationExpression, string name)
+        /// <inheritdoc />
+        public IQuery<T> IncludeCalculation<TProperty>(MetaExpression<TProperty> calculationExpression, string name)
         {
             var calcProperty =
                 new CalculatedProperty<TProperty>
@@ -232,13 +191,8 @@ namespace Meta.ORM.Query
             return this;
         }
 
-        /// <summary>
-        /// Include calculated column/property in query.
-        /// </summary>
-        /// <param name="calculationExpression">Expression for calculation.</param>
-        /// <param name="name">Unique name for calculated column.</param>
-        /// <returns>Query object.</returns>
-        public Query<T> IncludeCalculation(MetaExpression calculationExpression, string name)
+        /// <inheritdoc />
+        public IQuery<T> IncludeCalculation(MetaExpression calculationExpression, string name)
         {
             var calcProperty =
                 new CalculatedProperty
@@ -251,11 +205,8 @@ namespace Meta.ORM.Query
             return this;
         }
 
-        /// <summary>
-        /// Call of this method includes all immediate sub properties of referenced properties in query.
-        /// </summary>
-        /// <returns>Query object.</returns>
-        public Query<T> IncludeAllReferences()
+        /// <inheritdoc />
+        public IQuery<T> IncludeAllReferences()
         {
             foreach (var propertyInfo in typeof(T).GetProperties().Where(it=>it.PropertyType.IsClass && !it.PropertyType.ContainsGenericParameters))
             {
@@ -265,11 +216,8 @@ namespace Meta.ORM.Query
             return this;
         }
 
-        /// <summary>
-        /// Call of this method includes all immediate sub properties of <see cref="IEnumerable{T}"/> properties in query.
-        /// </summary>
-        /// <returns>Query object.</returns>
-        public Query<T> IncludeAllListProperties()
+        /// <inheritdoc />
+        public IQuery<T> IncludeAllListProperties()
         {
             //foreach (var propertyInfo in typeof(T).GetProperties().Where(it => it.PropertyType.GetGenericTypeDefinition() == ty))
             //{
@@ -278,24 +226,15 @@ namespace Meta.ORM.Query
             return this;
         }
 
-        /// <summary>
-        /// Call of this method specifies, than entities only of current type <see cref="T"/> should be extracted from database.
-        /// Inherited entities should be ignored.
-        /// </summary>
-        /// <returns>Query object.</returns>
-        public Query<T> Only()
+        /// <inheritdoc />
+        public IQuery<T> Only()
         {
             _only = true;
             return this;
         }
 
-        /// <summary>
-        /// Sets condition for entities in query. If there is already another condition, than <param name="condition"></param> would be merged with original condition
-        /// with and operator.
-        /// </summary>
-        /// <param name="condition">Condition for entities.</param>
-        /// <returns>Query object.</returns>
-        public Query<T> Where(Expression<Func<T, bool>> condition)
+        /// <inheritdoc />
+        public IQuery<T> Where(Expression<Func<T, bool>> condition)
         {
             MetaExpression<bool> metaCondition = ConvertExpression(condition);
             _condition = _condition == null ? metaCondition : _condition.And(metaCondition);
@@ -314,145 +253,170 @@ namespace Meta.ORM.Query
         //    return this;
         //}
 
-        /// <summary>
-        /// Sets condition for entities in query. If there is already another condition, than <param name="condition"></param> would be merged with original condition
-        /// with and operator.
-        /// </summary>
-        /// <param name="condition">Condition for entities.</param>
-        /// <returns>Query object.</returns>
-        public Query<T> Where(MetaExpression<bool> condition)
+        /// <inheritdoc />
+        public IQuery<T> Where(MetaExpression<bool> condition)
         {
             _condition = _condition == null ? condition : _condition.And(condition);
             return this;
         }
 
-        /// <summary>
-        /// Sets condition for entities in query. If there is already another condition, than <param name="condition"></param> would be merged with original condition
-        /// with and operator.
-        /// </summary>
-        /// <param name="condition">Condition for entities.</param>
-        /// <returns>Query object.</returns>
-        public Query<T> Where(Expression<Func<T, CalculatedPropertiesCollection, bool>> condition)
+        /// <inheritdoc />
+        public IQuery<T> Where(Expression<Func<T, CalculatedPropertiesCollection, bool>> condition)
         {
             MetaExpression<bool> metaCondition = ConvertExpression<bool>(condition);
             _condition = _condition == null ? metaCondition : _condition.And(metaCondition);
             return this;
         }
 
-        /// <summary>
-        /// Sets or adds ascending sorting order for query.
-        /// </summary>
-        /// <typeparam name="TProperty">Type of sorted expression.</typeparam>
-        /// <param name="propertyExpression">Property or expression, which is used for sorting.</param>
-        /// <returns>Query object.</returns>
-        public Query<T> OrderBy<TProperty>(Expression<Func<T, TProperty>> propertyExpression)
+        /// <inheritdoc />
+        public IOrderedQuery<T> OrderBy<TProperty>(Expression<Func<T, TProperty>> propertyExpression)
         {
             return this;
         }
 
-        /// <summary>
-        /// Sets or adds ascending sorting order for query.
-        /// </summary>
-        /// <typeparam name="TProperty">Type of sorted expression.</typeparam>
-        /// <param name="propertyExpression">Property or expression, which is used for sorting.</param>
-        /// <returns>Query object.</returns>
-        public Query<T> OrderBy<TProperty>(Expression<Func<T, CalculatedPropertiesCollection, TProperty>> propertyExpression)
+        /// <inheritdoc />
+        public IOrderedQuery<T> OrderBy<TProperty>(Expression<Func<T, CalculatedPropertiesCollection, TProperty>> propertyExpression)
         {
             return this;
         }
 
-        /// <summary>
-        /// Sets or adds descending sorting order for query.
-        /// </summary>
-        /// <typeparam name="TProperty">Type of sorted expression.</typeparam>
-        /// <param name="propertyExpression">Property or expression, which is used for sorting.</param>
-        /// <returns>Query object.</returns>
-        public Query<T> OrderByDescending<TProperty>(Expression<Func<T, TProperty>> propertyExpression)
+        /// <inheritdoc />
+        public IOrderedQuery<T> OrderByDescending<TProperty>(Expression<Func<T, TProperty>> propertyExpression)
         {
             return this;
         }
 
-        /// <summary>
-        /// Sets or adds descending sorting order for query.
-        /// </summary>
-        /// <typeparam name="TProperty">Type of sorted expression.</typeparam>
-        /// <param name="propertyExpression">Property or expression, which is used for sorting.</param>
-        /// <returns>Query object.</returns>
-        public Query<T> OrderByDescending<TProperty>(Expression<Func<T, CalculatedPropertiesCollection, TProperty>> propertyExpression)
+        /// <inheritdoc />
+        public IOrderedQuery<T> OrderByDescending<TProperty>(Expression<Func<T, CalculatedPropertiesCollection, TProperty>> propertyExpression)
         {
             return this;
         }
 
-        /// <summary>
-        /// Sets top/limit + offset for query.
-        /// </summary>
-        /// <param name="offset">Offset.</param>
-        /// <param name="limit">Limit.</param>
-        /// <returns></returns>
-        public Query<T> Offset(int offset, int? limit)
+        /// <inheritdoc />
+        public IQuery<T> Offset(int offset, int? limit)
         {
             _offset = offset;
             _limit = limit;
             return this;
         }
 
-        public Query<T> ForseRefresh()
+        /// <inheritdoc />
+        public IQuery<T> ForseRefresh()
         {
             _forseRefresh = true;
             return this;
         }
 
-        public Query<T> Distinct()
+        /// <inheritdoc />
+        public IQuery<T> Distinct()
         {
             _distinct = true;
             return this;
         }
 
-        public Query<T> IdList(IEnumerable<object> ids)
+        /// <inheritdoc />
+        public IQuery<T> IdList(IEnumerable<object> ids)
         {
             _ids = ids;
             return this;
         }
 
-        public Query<TResult> Select<TResult>(Expression<Func<T, TResult>> projection)
+        /// <inheritdoc />
+        public IQuery<TResult> Select<TResult>(Expression<Func<T, TResult>> projection)
         {
             return new Query<TResult>(_model, _unitOfWork, _sqlBuilder, _dbProvider);
         }
 
-        public Query<TResult> Select<TResult>(Expression<Func<T, CalculatedPropertiesCollection, TResult>> projection)
+        /// <inheritdoc />
+        public IEnumerable<T> AsEnumerable()
+        {
+            return this.ToList();
+        }
+
+        /// <inheritdoc />
+        public IQuery<TResult> Select<TResult>(Expression<Func<T, CalculatedPropertiesCollection, TResult>> projection)
         {
             return new Query<TResult>(_model, _unitOfWork, _sqlBuilder, _dbProvider);
         }
 
-        public Query<TResult> Join<TJoin, TResult>(Query<TJoin> join, Expression<Func<T, TJoin, bool>> condition, Expression<Func<T, IEnumerable<TJoin>, TResult>> projection)
+        /// <inheritdoc />
+        public IQuery<TResult> Join<TJoin, TResult>(Query<TJoin> join, Expression<Func<T, TJoin, bool>> condition, Expression<Func<T, IEnumerable<TJoin>, TResult>> projection)
         {
             return new Query<TResult>(_model, _unitOfWork, _sqlBuilder, _dbProvider);
         }
 
-        public Query<TResult> Join<TJoin, TResult>(Query<TJoin> join, MetaExpression<bool> condition,
+        /// <inheritdoc />
+        public IQuery<TResult> Join<TJoin, TResult>(Query<TJoin> join, MetaExpression<bool> condition,
             Expression<Func<T, IEnumerable<TJoin>, TResult>> projection)
         {
             return new Query<TResult>(_model, _unitOfWork, _sqlBuilder, _dbProvider);
         }
 
-        public Query<T> RecursionStep(Expression<Func<T, T, bool>> stepExpression)
+        /// <inheritdoc />
+        public IQuery<T> RecursionStep(Expression<Func<T, T, bool>> stepExpression)
         {
             return this;
         }
 
-        public Query<T> RecursionStep(MetaExpression<bool> stepExpression)
+        /// <inheritdoc />
+        public IQuery<T> RecursionStep(MetaExpression<bool> stepExpression)
         {
             return this;
         }
 
+        /// <inheritdoc />
         public IEnumerable<T> ToList()
         {
             return new List<T>();
         }
 
+        /// <inheritdoc />
         public async Task<IEnumerable<T>> ToListAsync()
         {
             return await Task.Run(() => new List<T>());
+        }
+
+        /// <inheritdoc />
+        public IOrderedQuery<T> ThenBy<TProperty>(Expression<Func<T, CalculatedPropertiesCollection, TProperty>> propertyExpression)
+        {
+            return this;
+        }
+
+        /// <inheritdoc />
+        public IOrderedQuery<T> ThenBy<TProperty>(Expression<Func<T, TProperty>> propertyExpression)
+        {
+            return this;
+        }
+
+        /// <inheritdoc />
+        public IOrderedQuery<T> ThenByDescending<TProperty>(Expression<Func<T, CalculatedPropertiesCollection, TProperty>> propertyExpression)
+        {
+            return this;
+        }
+
+        /// <inheritdoc />
+        public IOrderedQuery<T> ThenByDescending<TProperty>(Expression<Func<T, TProperty>> propertyExpression)
+        {
+            return this;
+        }
+
+        private IEnumerable<MemberInfo> GetPropertyPathFromExpression(MemberExpression memberExpression)
+        {
+            var member = memberExpression.Member;
+            if (member.MemberType != MemberTypes.Property)
+                throw new ArgumentException("Only Properties Allowed in Include statements");
+
+            if (memberExpression.Expression is MemberExpression innerMemberExpression)
+            {
+                return GetPropertyPathFromExpression(innerMemberExpression).Append(member);
+            }
+
+            if (memberExpression.Expression != null && !(memberExpression.Expression is ParameterExpression))
+            {
+                throw new ArgumentException("Only Properties Allowed in Include statements");
+            }
+
+            return new List<MemberInfo> { member };
         }
     }
 }

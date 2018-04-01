@@ -15,7 +15,6 @@ namespace Meta.ORM.Tests.Query
         public void Select_TypedQuery_Optimized()
         {
             var context = new UnitOfWork(new Mock<IModel>().Object, new Mock<ISqlBuilder>().Object, new Mock<IDbProvider>().Object);
-
             // New Query
             context
                 .GetRepository<TestData1>()
@@ -51,8 +50,8 @@ namespace Meta.ORM.Tests.Query
 
                 // Order
                 .OrderBy(data1 => data1.Name)
-                .OrderByDescending(data1 => data1.InnerProperty)
-                .OrderBy(data1 => data1.CalculationProperty1)
+                .ThenByDescending(data1 => data1.InnerProperty)
+                .ThenBy(data1 => data1.CalculationProperty1)
 
                 // Paging
                 .Offset(0, 10)
@@ -87,8 +86,8 @@ namespace Meta.ORM.Tests.Query
 
                 // Order
                 .OrderBy(data1 => data1.Name)
-                .OrderByDescending(data1 => data1.Property2.Name)
-                .OrderBy(data1 => data1.Name.Length)
+                .ThenByDescending(data1 => data1.Property2.Name)
+                .ThenBy(data1 => data1.Name.Length)
 
                 // Paging
                 .Offset(0, 10)
@@ -128,7 +127,7 @@ namespace Meta.ORM.Tests.Query
         public void Select_UnTypedQuery_WithStringNamedProperties()
         {
             var context = new UnitOfWork(new Mock<IModel>().Object, new Mock<ISqlBuilder>().Object, new Mock<IDbProvider>().Object);
-
+            
             // New Query
             context
                 .GetRepository(typeof(TestData1))
@@ -155,8 +154,8 @@ namespace Meta.ORM.Tests.Query
 
                 // Order
                 .OrderBy(entity => entity.GetPropertyValue("Name"))
-                .OrderByDescending(entity => entity.GetPropertyValue("Property2.Name"))
-                .OrderBy((entity, collection) => collection.GetPropertyValue<int>("CalculationProperty1"))
+                .ThenByDescending(entity => entity.GetPropertyValue("Property2.Name"))
+                .ThenBy((entity, collection) => collection.GetPropertyValue<int>("CalculationProperty1"))
 
                 // Paging
                 .Offset(0, 10)
@@ -240,8 +239,8 @@ namespace Meta.ORM.Tests.Query
 
                 // Order
                 .OrderBy(entity => entity.GetPropertyValue(propertyName))
-                .OrderByDescending(entity => entity.GetPropertyValue(propertyPath))
-                .OrderBy((entity, collection) => collection.GetPropertyValue<int>("CalculationProperty1"))
+                .ThenByDescending(entity => entity.GetPropertyValue(propertyPath))
+                .ThenBy((entity, collection) => collection.GetPropertyValue<int>("CalculationProperty1"))
 
                 // Paging
                 .Offset(0, 10)
@@ -324,8 +323,8 @@ namespace Meta.ORM.Tests.Query
 
                 // Order
                 .OrderBy(entity => entity.GetPropertyValue(propertyName))
-                .OrderByDescending(entity => entity.GetPropertyValue(propertyPath))
-                .OrderBy((entity, collection) => collection.GetPropertyValue<int>("CalculationProperty1"))
+                .ThenByDescending(entity => entity.GetPropertyValue(propertyPath))
+                .ThenBy((entity, collection) => collection.GetPropertyValue<int>("CalculationProperty1"))
 
                 // Paging
                 .Offset(0, 10)
@@ -408,8 +407,8 @@ namespace Meta.ORM.Tests.Query
 
                 // Order
                 .OrderBy(entity => entity.GetPropertyValue(propertyName))
-                .OrderByDescending(entity => entity.GetPropertyValue(propertyPath))
-                .OrderBy((entity, collection) => collection.GetPropertyValue("CalculationProperty1"))
+                .ThenByDescending(entity => entity.GetPropertyValue(propertyPath))
+                .ThenBy((entity, collection) => collection.GetPropertyValue("CalculationProperty1"))
 
                 // Paging
                 .Offset(0, 10)
@@ -492,8 +491,8 @@ namespace Meta.ORM.Tests.Query
 
                 // Order
                 .OrderBy(entity => entity.GetPropertyValue(propertyName))
-                .OrderByDescending(entity => entity.GetPropertyValue(propertyPath))
-                .OrderBy((entity, collection) => collection.GetPropertyValue("CalculationProperty1"))
+                .ThenByDescending(entity => entity.GetPropertyValue(propertyPath))
+                .ThenBy((entity, collection) => collection.GetPropertyValue("CalculationProperty1"))
 
                 // Paging
                 .Offset(0, 10)
@@ -571,8 +570,8 @@ namespace Meta.ORM.Tests.Query
 
                 // Order
                 .OrderBy(entity => entity.GetPropertyValue(propertyName))
-                .OrderByDescending(entity => entity.GetPropertyValue(propertyPath))
-                .OrderBy((entity, collection) => collection.GetPropertyValue("CalculationProperty1"))
+                .ThenByDescending(entity => entity.GetPropertyValue(propertyPath))
+                .ThenBy((entity, collection) => collection.GetPropertyValue("CalculationProperty1"))
 
                 // Paging
                 .Offset(0, 10)
