@@ -86,7 +86,7 @@ namespace Meta.ORM.Query
         /// <param name="propertyExpression">Expression for property path.</param>
         /// <param name="listConfig">Configuration for sub-query.</param>
         /// <returns>Query object.</returns>
-        IQuery<T> IncludeList<TProperty>(Expression<Func<T, IEnumerable<TProperty>>> propertyExpression, Action<Query<TProperty>> listConfig = null);
+        IQuery<T> IncludeList<TProperty>(Expression<Func<T, IEnumerable<TProperty>>> propertyExpression, Action<Query<TProperty>>? listConfig = null);
 
         /// <summary>
         /// Link current query with another query of <see cref="TJoin"/> objects with specific condition.

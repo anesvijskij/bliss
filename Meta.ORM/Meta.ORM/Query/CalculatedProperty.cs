@@ -4,6 +4,12 @@ namespace Meta.ORM.Query
 {
     public class CalculatedProperty : ICalculatedProperty
     {
+        public CalculatedProperty(string name, MetaExpression expression)
+        {
+            Name = name;
+            Expression = expression;
+        }
+
         public string Name { get; set; }
 
         public MetaExpression Expression { get; set; }

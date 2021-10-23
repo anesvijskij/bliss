@@ -27,13 +27,13 @@ namespace Meta.ORM.Entities
         public IEntitiesRepository GetRepository(Type type)
         {
             Type dqType = typeof(GenericEntitiesRepository<>).MakeGenericType(type);
-            return (IEntitiesRepository)Activator.CreateInstance(dqType, _model, this, _sqlBuilder, _dbProvider);
+            return (IEntitiesRepository)Activator.CreateInstance(dqType, _model, this, _sqlBuilder, _dbProvider)!;
         }
 
         public IEntitiesRepository GetRepository(IEntityType entityType)
         {
             Type dqType = typeof(GenericEntitiesRepository<>).MakeGenericType(entityType.SystemType);
-            return (IEntitiesRepository)Activator.CreateInstance(dqType, _model, this, _sqlBuilder, _dbProvider);
+            return (IEntitiesRepository)Activator.CreateInstance(dqType, _model, this, _sqlBuilder, _dbProvider)!;
         }
 
         public IGenericEntitiesRepository<T> GetRepository<T>() where T : class, IEntity, new()

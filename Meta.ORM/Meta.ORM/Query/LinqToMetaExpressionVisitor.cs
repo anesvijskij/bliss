@@ -14,14 +14,14 @@ namespace Meta.ORM.Query
     public class LinqToMetaExpressionVisitor : ExpressionVisitor
     {
         private readonly Type _currentType;
-        private MetaExpression _expression = null;
+        private MetaExpression? _expression;
 
         public LinqToMetaExpressionVisitor(Type currentType)
         {
             _currentType = currentType;
         }
 
-        public MetaExpression MetaExpression => _expression;
+        public MetaExpression? MetaExpression => _expression;
 
         /// <inheritdoc />
         protected override Expression VisitBinary(BinaryExpression node)

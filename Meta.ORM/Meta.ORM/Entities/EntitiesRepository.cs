@@ -30,7 +30,7 @@ namespace Meta.ORM.Entities
 
         public IEntity Create()
         {
-            return null;
+            throw new NotImplementedException();
         }
     }
 }

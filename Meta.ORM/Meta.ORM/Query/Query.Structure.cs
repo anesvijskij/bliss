@@ -30,7 +30,7 @@ namespace Meta.ORM.Query
                 includedProperty = currentCollection.FirstOrDefault(it => it.Member == memberInfo);
                 if (includedProperty == null)
                 {
-                    includedProperty = new QueryProperty { Member = memberInfo };
+                    includedProperty = new QueryProperty(member: memberInfo);
                     currentCollection.Add(includedProperty);
                 }
 
@@ -47,12 +47,8 @@ namespace Meta.ORM.Query
                 throw new ArgumentException($"Property {member.Name} already added to query.");
             }
 
-            var queryProperty = new ListQueryProperty<TProperty>
-                                {
-                                    Member = member,
-                                    ListQuery = new Query<TProperty>(_model,
-                                        _unitOfWork, _sqlBuilder, _dbProvider)
-                                };
+            var queryProperty = new ListQueryProperty<TProperty>(member, new Query<TProperty>(_model,
+                _unitOfWork, _sqlBuilder, _dbProvider));
             _propertiesToLoad.Add(queryProperty);
             return queryProperty;
         }

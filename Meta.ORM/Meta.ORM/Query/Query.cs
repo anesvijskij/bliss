@@ -101,7 +101,7 @@ namespace Meta.ORM.Query
         /// <inheritdoc />
         public IQuery<T> IncludeList<TProperty>(
             Expression<Func<T, IEnumerable<TProperty>>> propertyExpression,
-            Action<Query<TProperty>> listConfig = null)
+            Action<Query<TProperty>>? listConfig = null)
         {
             if (propertyExpression.Body is MemberExpression memberExpression)
             {
@@ -195,11 +195,7 @@ namespace Meta.ORM.Query
         public IQuery<T> IncludeCalculation(MetaExpression calculationExpression, string name)
         {
             var calcProperty =
-                new CalculatedProperty
-                {
-                    Name = name,
-                    Expression = calculationExpression
-                };
+                new CalculatedProperty(name, calculationExpression);
 
             _calculatedProperties.AddProperty(name, calcProperty);
             return this;

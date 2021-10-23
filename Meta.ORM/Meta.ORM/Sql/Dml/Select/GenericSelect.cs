@@ -5,18 +5,18 @@ namespace Meta.ORM.Sql.Dml.Select
 {
     public class GenericSelect<T> : Select
     {
-        public GenericSelect(string alias = null, string schema = null) : base(typeof(T).Name, alias ?? typeof(T).Name, schema)
+        public GenericSelect(string? alias = null, string? schema = null) : base(typeof(T).Name, alias ?? typeof(T).Name, schema)
         {
 
         }
 
-        public new GenericSelect<T> Column(Statement expression, string alias = null)
+        public new GenericSelect<T> Column(Statement expression, string? alias = null)
         {
             AppendColumn(new StatementColumn(expression, this, alias));
             return this;
         }
 
-        public GenericSelect<T> Column<TProperty>(Expression<Func<T, TProperty>> columnDefinition, string alias = null)
+        public GenericSelect<T> Column<TProperty>(Expression<Func<T, TProperty>> columnDefinition, string? alias = null)
         {
             if (columnDefinition.Body is MemberExpression memberExpression)
             {
