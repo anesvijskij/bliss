@@ -7,6 +7,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Meta.ORM", "Meta.ORM\Meta.O
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Meta.ORM.Tests", "Meta.ORM.Tests\Meta.ORM.Tests.csproj", "{E38CE0A8-7BB7-4919-8415-A1288E418835}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Meta.ORM.Common", "Meta.ORM.Common\Meta.ORM.Common.csproj", "{1B4C041F-E4AF-4C07-A688-CC6F75D2BA9E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Meta.ORM.Data", "Meta.ORM.Data\Meta.ORM.Data.csproj", "{09C0E5B8-BDD1-4069-8264-AB7897CEC744}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +25,14 @@ Global
 		{E38CE0A8-7BB7-4919-8415-A1288E418835}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E38CE0A8-7BB7-4919-8415-A1288E418835}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E38CE0A8-7BB7-4919-8415-A1288E418835}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1B4C041F-E4AF-4C07-A688-CC6F75D2BA9E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1B4C041F-E4AF-4C07-A688-CC6F75D2BA9E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1B4C041F-E4AF-4C07-A688-CC6F75D2BA9E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1B4C041F-E4AF-4C07-A688-CC6F75D2BA9E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{09C0E5B8-BDD1-4069-8264-AB7897CEC744}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{09C0E5B8-BDD1-4069-8264-AB7897CEC744}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{09C0E5B8-BDD1-4069-8264-AB7897CEC744}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{09C0E5B8-BDD1-4069-8264-AB7897CEC744}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

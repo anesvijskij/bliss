@@ -1,0 +1,12 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net5.0</TargetFramework>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\Meta.ORM.Common\Meta.ORM.Common.csproj" />
+      <ProjectReference Include="..\Meta.ORM\Meta.ORM.csproj" />
+    </ItemGroup>
+
+</Project>
