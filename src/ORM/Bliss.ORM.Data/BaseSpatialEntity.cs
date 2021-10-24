@@ -5,8 +5,8 @@ using Bliss.ORM.Model;
 
 namespace Bliss.ORM.Data
 {
-    [UnstructuredPersistence]
-    public abstract class BaseUnstructuredEntity : IEntity
+    [SpatialPersistence]
+    public abstract class BaseSpatialEntity : IEntity
     {
         public int Id { get; }
         public object GetPropertyValue(string propertyName)
@@ -33,13 +33,5 @@ namespace Bliss.ORM.Data
         {
             throw new NotImplementedException();
         }
-    }
-
-    /// <summary>
-    /// Workflow support
-    /// </summary>
-    public interface IDocumentEntity
-    {
-        
     }
 }

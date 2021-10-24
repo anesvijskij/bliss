@@ -16,7 +16,18 @@ namespace Bliss.ORM.Common
     {
         
     }
+    
+    public class GraphPersistenceAttribute : PersistenceAttribute
+    {
+        
+    }
+    
+    public class SpatialPersistenceAttribute : PersistenceAttribute
+    {
+        
+    }
 
+    [AttributeUsage(AttributeTargets.Class | AttributeTargets.Interface)]
     public class InMemoryPersistenceAttribute : Attribute
     {
         

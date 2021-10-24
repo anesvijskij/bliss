@@ -11,7 +11,8 @@ namespace Bliss.ORM.Entities
         private readonly ISqlBuilder _sqlBuilder;
         private readonly IDbProvider _dbProvider;
 
-        public GenericEntitiesRepository(IModel model, IUnitOfWork unitOfWork, ISqlBuilder sqlBuilder, IDbProvider dbProvider)
+        public GenericEntitiesRepository(IModel model, IUnitOfWork unitOfWork, ISqlBuilder sqlBuilder,
+            IDbProvider dbProvider)
         {
             _model = model;
             _unitOfWork = unitOfWork;

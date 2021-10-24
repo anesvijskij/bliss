@@ -30,7 +30,7 @@ namespace Bliss.ORM.Entities
 
         public IEntity Create()
         {
-            throw new NotImplementedException();
+            return Activator.CreateInstance(_type) as IEntity ?? throw new InvalidOperationException();
         }
     }
 }
