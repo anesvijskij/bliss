@@ -1,0 +1,12 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net5.0</TargetFramework>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\Bliss.ORM.Common\Bliss.ORM.Common.csproj" />
+      <ProjectReference Include="..\Bliss.ORM\Bliss.ORM.csproj" />
+    </ItemGroup>
+
+</Project>
