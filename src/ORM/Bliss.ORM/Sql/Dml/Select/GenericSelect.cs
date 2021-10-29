@@ -5,9 +5,9 @@ namespace Bliss.ORM.Sql.Dml.Select
 {
     public class GenericSelect<T> : Select
     {
-        public GenericSelect(string? alias = null, string? schema = null) : base(typeof(T).Name, alias ?? typeof(T).Name, schema)
+        public GenericSelect(string? alias = null, string? schema = null) : base(typeof(T).Name,
+            alias ?? typeof(T).Name, schema)
         {
-
         }
 
         public new GenericSelect<T> Column(Statement expression, string? alias = null)
@@ -26,9 +26,9 @@ namespace Bliss.ORM.Sql.Dml.Select
                 return this;
             }
 
-            if (columnDefinition.Body is ConstantExpression contantExpression)
+            if (columnDefinition.Body is ConstantExpression constantExpression)
             {
-                AppendColumn(new StatementColumn(new Constant(contantExpression.Value), this, alias));
+                AppendColumn(new StatementColumn(new Constant(constantExpression.Value), this, alias));
                 return this;
             }
 

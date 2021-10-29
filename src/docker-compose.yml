@@ -1,0 +1,22 @@
+version: '3.4'
+
+services:
+  bliss.datafacade:
+    image: ${DOCKER_REGISTRY-}blissdatafacade
+    build:
+      context: .
+      dockerfile: Web/Bliss.DataFacade/Dockerfile
+
+  bliss.schemafacade:
+    image: ${DOCKER_REGISTRY-}blissschemafacade
+    build:
+      context: .
+      dockerfile: Web/Bliss.SchemaFacade/Dockerfile
+
+
+  bliss.workflowfacade:
+    image: ${DOCKER_REGISTRY-}blissworkflowfacade
+    build:
+      context: .
+      dockerfile: Web/Bliss.WorkflowFacade/Dockerfile
+

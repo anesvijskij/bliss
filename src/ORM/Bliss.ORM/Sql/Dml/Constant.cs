@@ -2,11 +2,11 @@
 {
     public class Constant : Statement
     {
-        public Constant(object value)
+        public Constant(object? value)
         {
             Value = value;
         }
 
-        public object Value { get; }
+        public object? Value { get; }
     }
 }

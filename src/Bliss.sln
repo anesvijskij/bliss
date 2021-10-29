@@ -1,24 +1,29 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bliss.ORM", "ORM\Bliss.ORM\Bliss.ORM.csproj", "{748602D9-88E3-457B-B589-DE710A8EB916}"
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31729.503
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bliss.ORM", "ORM\Bliss.ORM\Bliss.ORM.csproj", "{748602D9-88E3-457B-B589-DE710A8EB916}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ORM", "ORM", "{EA6378ED-7B3C-4627-8933-1717363353D6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bliss.ORM.Common", "ORM\Bliss.ORM.Common\Bliss.ORM.Common.csproj", "{581DA138-D368-4047-82F4-36261E566841}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bliss.ORM.Common", "ORM\Bliss.ORM.Common\Bliss.ORM.Common.csproj", "{581DA138-D368-4047-82F4-36261E566841}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bliss.ORM.Data", "ORM\Bliss.ORM.Data\Bliss.ORM.Data.csproj", "{4BBAEC1F-04E5-4B1D-B92C-7D80DCCF407E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bliss.ORM.Data", "ORM\Bliss.ORM.Data\Bliss.ORM.Data.csproj", "{4BBAEC1F-04E5-4B1D-B92C-7D80DCCF407E}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Test", "Test", "{FC742A5F-96B1-44C8-AFD4-2AB4094D7680}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bliss.ORM.Tests", "..\tests\Bliss.ORM.Tests\Bliss.ORM.Tests.csproj", "{54AC4DFD-DBE2-4A81-9C5A-01177A64CDFD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bliss.ORM.Tests", "..\tests\Bliss.ORM.Tests\Bliss.ORM.Tests.csproj", "{54AC4DFD-DBE2-4A81-9C5A-01177A64CDFD}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Web", "Web", "{4BC3F8E3-CD7A-4A66-BF02-29CEDF497AD2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bliss.DataFacade", "Web\Bliss.DataFacade\Bliss.DataFacade.csproj", "{D9321BAC-47ED-4667-B284-5E243D4A633D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bliss.DataFacade", "Web\Bliss.DataFacade\Bliss.DataFacade.csproj", "{D9321BAC-47ED-4667-B284-5E243D4A633D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bliss.SchemaFacade", "Web\Bliss.SchemaFacade\Bliss.SchemaFacade.csproj", "{47B3FC8A-846F-4865-9C47-3B36BD62D780}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bliss.SchemaFacade", "Web\Bliss.SchemaFacade\Bliss.SchemaFacade.csproj", "{47B3FC8A-846F-4865-9C47-3B36BD62D780}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bliss.WorkflowFacade", "Web\Bliss.WorkflowFacade\Bliss.WorkflowFacade.csproj", "{4D6A287F-1F3B-4141-9A3B-54905FFF9B9D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bliss.WorkflowFacade", "Web\Bliss.WorkflowFacade\Bliss.WorkflowFacade.csproj", "{4D6A287F-1F3B-4141-9A3B-54905FFF9B9D}"
+EndProject
+Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{2D526E3E-A635-4C4D-9FC8-52A2251703C8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -54,6 +59,13 @@ Global
 		{4D6A287F-1F3B-4141-9A3B-54905FFF9B9D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4D6A287F-1F3B-4141-9A3B-54905FFF9B9D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4D6A287F-1F3B-4141-9A3B-54905FFF9B9D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2D526E3E-A635-4C4D-9FC8-52A2251703C8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2D526E3E-A635-4C4D-9FC8-52A2251703C8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2D526E3E-A635-4C4D-9FC8-52A2251703C8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2D526E3E-A635-4C4D-9FC8-52A2251703C8}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{748602D9-88E3-457B-B589-DE710A8EB916} = {EA6378ED-7B3C-4627-8933-1717363353D6}
@@ -63,5 +75,8 @@ Global
 		{D9321BAC-47ED-4667-B284-5E243D4A633D} = {4BC3F8E3-CD7A-4A66-BF02-29CEDF497AD2}
 		{47B3FC8A-846F-4865-9C47-3B36BD62D780} = {4BC3F8E3-CD7A-4A66-BF02-29CEDF497AD2}
 		{4D6A287F-1F3B-4141-9A3B-54905FFF9B9D} = {4BC3F8E3-CD7A-4A66-BF02-29CEDF497AD2}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {96F6A316-8640-43F9-A8B7-B64D0F552A18}
 	EndGlobalSection
 EndGlobal

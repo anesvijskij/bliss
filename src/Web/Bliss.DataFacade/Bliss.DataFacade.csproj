@@ -3,8 +3,9 @@
     <PropertyGroup>
         <TargetFramework>net5.0</TargetFramework>
         <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+        <RootNamespace>WebApplication</RootNamespace>
         <DockerComposeProjectPath>..\..\docker-compose.dcproj</DockerComposeProjectPath>
-        <UserSecretsId>e95cbf2d-7a04-4263-ba39-58069c8dc444</UserSecretsId>
+        <UserSecretsId>9da57f8a-8491-4f1a-8a01-49b7ca8577b3</UserSecretsId>
         <DockerfileContext>..\..</DockerfileContext>
     </PropertyGroup>
 

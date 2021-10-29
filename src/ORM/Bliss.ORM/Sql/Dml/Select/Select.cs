@@ -1,4 +1,6 @@
-﻿namespace Bliss.ORM.Sql.Dml.Select
+﻿using Bliss.ORM.Model;
+
+namespace Bliss.ORM.Sql.Dml.Select
 {
     public class Select : Statement
     {
@@ -30,6 +32,12 @@
         public Select Column(string columnName, string? alias = null)
         {
             AppendColumn(new StatementColumn(new SqlField(columnName), this, alias));
+            return this;
+        }
+        
+        public Select Column<TProperty>(TProperty column, string? alias = null) where TProperty : IRuntimeProperty
+        {
+            AppendColumn(new StatementColumn(new SqlField(column.Name), this, alias));
             return this;
         }
 
